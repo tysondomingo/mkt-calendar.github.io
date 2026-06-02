@@ -7,591 +7,255 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #F5F0E8;
-    --warm-white: #FAF8F4;
-    --ink: #1C1917;
-    --ink-light: #4A4540;
-    --ink-muted: #8A8278;
-    --rule: #D8D0C4;
-
-    --mg: #2D4A3E;
-    --mg-light: #E8F0EC;
-    --pp: #5C3D2E;
-    --pp-light: #F0EAE5;
-    --bp: #1E3A5F;
-    --bp-light: #E5ECF4;
-    --bj: #4A3728;
-    --bj-light: #EDE8E3;
-
-    --tag-launch: #2D4A3E;
-    --tag-catalog: #5C3D2E;
-    --tag-pricelist: #1E3A5F;
-    --tag-tradeshow: #2C2C2C;
-    --tag-maildrop: #6B4C35;
-    --tag-salesrep: #7A6845;
-    --tag-customer: #4A5568;
+    --cream: #F5F0E8; --warm-white: #FAF8F4;
+    --ink: #1C1917; --ink-muted: #8A8278; --rule: #D8D0C4;
+    --col-w: 220px; --label-w: 160px; --row-h: 200px;
+    --ts-row-h: 90px;
+    --mg: #2D4A3E; --mg-light: #E8F0EC;
+    --pp: #5C3D2E; --pp-light: #F0EAE5;
+    --bp: #1E3A5F; --bp-light: #E5ECF4;
+    --bj: #4A3728; --bj-light: #EDE8E3;
+    --ahd: #2C2C2C; --ahd-light: #EEEAE4;
+    --tag-launch: #2D4A3E; --tag-catalog: #5C3D2E; --tag-pricelist: #1E3A5F;
+    --tag-tradeshow: #2C2C2C; --tag-maildrop: #6B4C35; --tag-salesrep: #7A6845; --tag-customer: #4A5568;
+    /* Heights of sticky chrome above the frozen rows — set by JS */
+    --chrome-h: 0px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Roboto', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; font-size: 14px; overflow-x: hidden; }
 
-  body {
-    font-family: 'Roboto', sans-serif;
+  /* ── PAGE CHROME (all sticky) ── */
+  #chrome {
+    position: sticky;
+    top: 0;
+    z-index: 100;
     background: var(--cream);
-    color: var(--ink);
-    min-height: 100vh;
-    font-size: 14px;
   }
 
-  /* HEADER */
-  header {
-    background: var(--ink);
-    color: var(--cream);
-    padding: 28px 40px 24px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 20px;
-  }
-
-  .header-left h1 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 34px;
-    font-weight: 300;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    line-height: 1;
-  }
-
-  .header-left p {
-    margin-top: 6px;
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    color: var(--ink-muted);
-    text-transform: uppercase;
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .year-select {
-    background: transparent;
-    border: 1px solid #444;
-    color: var(--cream);
-    padding: 6px 12px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    letter-spacing: 0.1em;
-  }
-
-  .btn {
-    padding: 7px 16px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.12em;
-    cursor: pointer;
-    border: none;
-    text-transform: uppercase;
-  }
-
+  header { background: var(--ink); color: var(--cream); padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .header-left h1 { font-family: 'Instrument Serif', serif; font-size: 26px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; }
+  .header-left p { margin-top: 3px; font-size: 11px; letter-spacing: 0.2em; color: var(--ink-muted); text-transform: uppercase; }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+  .year-select { background: transparent; border: 1px solid #444; color: var(--cream); padding: 5px 10px; font-family: 'Roboto', sans-serif; font-size: 13px; cursor: pointer; }
+  .btn { padding: 6px 14px; font-family: 'Roboto', sans-serif; font-size: 12px; letter-spacing: 0.1em; cursor: pointer; border: none; text-transform: uppercase; white-space: nowrap; }
   .btn-primary { background: var(--cream); color: var(--ink); }
   .btn-ghost { background: transparent; border: 1px solid #555; color: #aaa; }
   .btn-ghost:hover { border-color: var(--cream); color: var(--cream); }
+  .btn-danger { background: #8B2020; color: white; }
 
-  /* LEGEND */
-  .legend {
-    background: var(--warm-white);
-    border-bottom: 1px solid var(--rule);
-    padding: 10px 40px;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .legend-label {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    margin-right: 4px;
-  }
-
-  .legend-items { display: flex; gap: 12px; flex-wrap: wrap; }
-
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 2px 8px;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    font-weight: 500;
-    border-radius: 2px;
-    cursor: default;
-    white-space: nowrap;
-  }
-
+  .legend { background: var(--warm-white); border-bottom: 1px solid var(--rule); padding: 7px 32px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .legend-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); margin-right: 4px; }
+  .tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; border-radius: 2px; white-space: nowrap; }
   .tag-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-
-  .tag.launch    { background: #E8F0EC; color: var(--tag-launch);    }
-  .tag.catalog   { background: #EDE8E3; color: var(--tag-catalog);   }
+  .tag.launch    { background: #E8F0EC; color: var(--tag-launch); }
+  .tag.catalog   { background: #EDE8E3; color: var(--tag-catalog); }
   .tag.pricelist { background: #E5ECF4; color: var(--tag-pricelist); }
   .tag.tradeshow { background: #E8E8E8; color: var(--tag-tradeshow); }
-  .tag.maildrop  { background: #EFE7DE; color: var(--tag-maildrop);  }
-  .tag.salesrep  { background: #F0EBE0; color: var(--tag-salesrep);  }
-  .tag.customer  { background: #E8EDF4; color: var(--tag-customer);  }
+  .tag.maildrop  { background: #EFE7DE; color: var(--tag-maildrop); }
+  .tag.salesrep  { background: #F0EBE0; color: var(--tag-salesrep); }
+  .tag.customer  { background: #E8EDF4; color: var(--tag-customer); }
 
-  /* BRAND FILTER */
-  .brand-bar {
-    background: var(--cream);
-    border-bottom: 1px solid var(--rule);
-    padding: 0 40px;
-    display: flex;
-    gap: 0;
+  .toolbar { padding: 9px 32px; display: flex; align-items: center; gap: 12px; background: var(--cream); border-bottom: 1px solid var(--rule); }
+  .search-input { padding: 5px 10px; border: 1px solid var(--rule); background: var(--warm-white); font-family: 'Roboto', sans-serif; font-size: 13px; color: var(--ink); width: 200px; outline: none; }
+  .search-input:focus { border-color: var(--ink); }
+  .toolbar-note { margin-left: auto; font-size: 11px; color: var(--ink-muted); }
+  .view-toggle { display: flex; }
+  .view-btn { padding: 5px 12px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; border: 1px solid var(--rule); background: none; color: var(--ink-muted); font-family: 'Roboto', sans-serif; }
+  .view-btn:first-child { border-right: none; }
+  .view-btn.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+  /* ── FROZEN HEADER (month row + trade show row) ── */
+  /* sits inside #chrome so it scrolls off the page with the chrome block as one unit,
+     but the whole #chrome block is sticky so everything freezes together */
+  .frozen-scroll {
+    overflow: hidden; /* clips but doesn't show scrollbar — synced via JS */
+    border-bottom: 2px solid var(--rule);
   }
 
-  .brand-tab {
-    padding: 12px 20px;
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: none;
-    background: none;
-    color: var(--ink-muted);
-    border-bottom: 2px solid transparent;
-    transition: all 0.15s;
-    font-family: 'Roboto', sans-serif;
-  }
-
-  .brand-tab:hover { color: var(--ink); }
-  .brand-tab.active { color: var(--ink); border-bottom-color: var(--ink); }
-  .brand-tab.mg.active   { border-bottom-color: var(--mg); color: var(--mg); }
-  .brand-tab.pp.active   { border-bottom-color: var(--pp); color: var(--pp); }
-  .brand-tab.bp.active   { border-bottom-color: var(--bp); color: var(--bp); }
-  .brand-tab.bj.active   { border-bottom-color: var(--bj); color: var(--bj); }
-
-  /* MAIN LAYOUT */
-  .main { padding: 24px 40px 60px; }
-
-  /* MONTH GRID */
-  .grid {
+  .frozen-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--rule);
-    border: 1px solid var(--rule);
-    margin-bottom: 32px;
+    grid-template-columns: var(--label-w) repeat(12, var(--col-w));
+    min-width: calc(var(--label-w) + 12 * var(--col-w));
   }
 
-  .month-cell {
-    background: var(--warm-white);
-    padding: 16px;
-    min-height: 180px;
-    position: relative;
+  /* corner cells */
+  .f-corner {
+    background: var(--ink);
+    position: sticky;
+    left: 0;
+    z-index: 20;
+    border-right: 2px solid #333;
+    border-bottom: 1px solid #333;
   }
-
-  .month-name {
-    font-family: 'Instrument Serif', serif;
-    font-size: 24px;
-    font-weight: 300;
-    letter-spacing: 0.08em;
-    color: var(--ink);
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .month-num {
-    font-family: 'Roboto', sans-serif;
-    font-size: 11px;
-    color: var(--ink-muted);
-    letter-spacing: 0.15em;
-  }
-
-  .events-list { display: flex; flex-direction: column; gap: 5px; }
-
-  /* EVENT CHIP */
-  .event {
+  .f-corner-ts {
+    background: #F2EDE6;
+    position: sticky;
+    left: 0;
+    z-index: 20;
+    border-right: 2px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    border-left: 4px solid var(--ahd);
+    padding: 10px 14px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding: 6px 8px;
-    border-radius: 2px;
-    cursor: pointer;
-    border-left: 2px solid transparent;
-    transition: opacity 0.15s;
+    justify-content: center;
+    gap: 3px;
+  }
+  .f-corner-ts .brand-label-name { font-family: 'Instrument Serif', serif; font-size: 15px; letter-spacing: 0.06em; }
+  .f-corner-ts .brand-label-tag  { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; color: var(--ahd); }
+
+  /* month header cells */
+  .f-month {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 10px 14px;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .f-month-num { font-family: 'Roboto', sans-serif; font-size: 10px; color: #666; letter-spacing: 0.15em; margin-bottom: 2px; }
+
+  /* trade show data cells in frozen row */
+  .f-ts-cell {
+    background: #F5F0E9;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 8px 10px;
+    min-height: var(--ts-row-h);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     position: relative;
   }
+  .f-ts-cell.even-col { background: #F0EAE2; }
+  .f-ts-cell:hover { background: #EDE6DC; }
 
-  .event:hover { opacity: 0.85; }
+  .add-cell-btn {
+    position: absolute; bottom: 5px; right: 5px;
+    width: 17px; height: 17px;
+    border: 1px solid var(--rule); background: var(--cream); color: var(--ink-muted);
+    font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    border-radius: 2px; opacity: 0; transition: opacity 0.15s; line-height: 1;
+  }
+  .f-ts-cell:hover .add-cell-btn,
+  .cal-cell:hover .add-cell-btn { opacity: 1; }
 
-  .event.launch    { background: var(--tag-launch);    color: white; border-left-color: transparent; }
+  /* ── SCROLLABLE BODY ── */
+  .body-scroll {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 40px;
+  }
+  .body-scroll.hidden { display: none; }
+
+  .body-grid {
+    display: grid;
+    grid-template-columns: var(--label-w) repeat(12, var(--col-w));
+    min-width: calc(var(--label-w) + 12 * var(--col-w));
+    border-top: 1px solid var(--rule);
+  }
+
+  .cal-brand-label {
+    position: sticky; left: 0; z-index: 5;
+    background: var(--warm-white);
+    border-right: 2px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 14px 16px;
+    display: flex; flex-direction: column; justify-content: center; gap: 4px;
+    min-height: var(--row-h);
+  }
+  .cal-brand-label.MG  { border-left: 4px solid var(--mg); }
+  .cal-brand-label.PP  { border-left: 4px solid var(--pp); }
+  .cal-brand-label.BP  { border-left: 4px solid var(--bp); }
+  .cal-brand-label.BJ  { border-left: 4px solid var(--bj); }
+  .brand-label-name { font-family: 'Instrument Serif', serif; font-size: 16px; letter-spacing: 0.06em; line-height: 1.2; }
+  .brand-label-tag { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; margin-top: 2px; }
+  .brand-label-tag.MG { color: var(--mg); }
+  .brand-label-tag.PP { color: var(--pp); }
+  .brand-label-tag.BP { color: var(--bp); }
+  .brand-label-tag.BJ { color: var(--bj); }
+
+  .cal-cell {
+    background: var(--warm-white);
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 10px;
+    min-height: var(--row-h);
+    display: flex; flex-direction: column; gap: 5px;
+    position: relative;
+  }
+  .cal-cell.even-col { background: #F8F4ED; }
+  .cal-cell:hover { background: #F0EBE2; }
+
+  /* events */
+  .event { display: flex; flex-direction: column; gap: 2px; padding: 5px 7px; border-radius: 2px; cursor: pointer; transition: opacity 0.15s; }
+  .event:hover { opacity: 0.82; }
+  .event.launch    { background: var(--tag-launch);    color: white; }
   .event.catalog   { background: var(--tag-catalog);   color: white; }
   .event.pricelist { background: var(--tag-pricelist); color: white; }
   .event.tradeshow { background: var(--tag-tradeshow); color: white; }
   .event.maildrop  { background: var(--tag-maildrop);  color: white; }
   .event.salesrep  { background: #EDE5D8; color: var(--tag-salesrep); }
   .event.customer  { background: #DDE5F0; color: var(--tag-customer); }
+  .event-name { font-size: 11px; font-weight: 500; line-height: 1.3; }
+  .event-date { font-size: 10px; opacity: 0.8; }
 
-  .event-brand {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    opacity: 0.75;
-    font-weight: 500;
-  }
-
-  .event-name {
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    line-height: 1.3;
-  }
-
-  .event-date {
-    font-size: 11px;
-    opacity: 0.8;
-    letter-spacing: 0.05em;
-  }
-
-  /* ADD EVENT BTN */
-  .add-event-btn {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    width: 20px;
-    height: 20px;
-    border: 1px solid var(--rule);
-    background: var(--cream);
-    color: var(--ink-muted);
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 2px;
-    line-height: 1;
-    opacity: 0;
-    transition: opacity 0.15s;
-  }
-
-  .month-cell:hover .add-event-btn { opacity: 1; }
-
-  /* MODAL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(28,25,23,0.6);
-    z-index: 100;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .modal-overlay.open { display: flex; }
-
-  .modal {
-    background: var(--warm-white);
-    width: 480px;
-    max-width: 95vw;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 32px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  }
-
-  .modal h2 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 26px;
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    margin-bottom: 24px;
-    text-transform: uppercase;
-  }
-
-  .form-group { margin-bottom: 16px; }
-
-  .form-group label {
-    display: block;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    margin-bottom: 5px;
-  }
-
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid var(--rule);
-    background: var(--cream);
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    color: var(--ink);
-    outline: none;
-  }
-
-  .form-group input:focus,
-  .form-group select:focus { border-color: var(--ink); }
-
-  .form-group textarea { resize: vertical; min-height: 60px; }
-
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-  .modal-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--rule);
-  }
-
-  .btn-danger { background: #8B2020; color: white; }
-
-  /* EVENT DETAIL PANEL */
-  .detail-panel {
-    display: none;
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 320px;
-    background: var(--warm-white);
-    border-left: 1px solid var(--rule);
-    padding: 32px 24px;
-    z-index: 50;
-    overflow-y: auto;
-    box-shadow: -10px 0 40px rgba(0,0,0,0.1);
-  }
-
-  .detail-panel.open { display: block; }
-
-  .detail-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: var(--ink-muted);
-  }
-
-  .detail-brand {
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .detail-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 24px;
-    font-weight: 400;
-    letter-spacing: 0.06em;
-    margin-bottom: 20px;
-    line-height: 1.3;
-  }
-
-  .detail-row {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    margin-bottom: 14px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .detail-row:last-of-type { border-bottom: none; }
-
-  .detail-key {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-  }
-
-  .detail-val { font-size: 14px; color: var(--ink); }
-
-  .detail-actions { display: flex; gap: 8px; margin-top: 20px; }
-
-  /* LIST VIEW */
-  .view-toggle {
-    display: flex;
-    gap: 0;
-    margin-bottom: 20px;
-  }
-
-  .view-btn {
-    padding: 6px 14px;
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: 1px solid var(--rule);
-    background: none;
-    color: var(--ink-muted);
-    font-family: 'Roboto', sans-serif;
-  }
-
-  .view-btn:first-child { border-right: none; }
-  .view-btn.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
-
-  .list-view { display: none; }
+  /* ── LIST VIEW ── */
+  .list-view { display: none; padding: 24px 32px 60px; }
   .list-view.active { display: block; }
-  .grid-view { display: block; }
-  .grid-view.hidden { display: none; }
-
-  .list-table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid var(--rule);
-  }
-
-  .list-table th {
-    background: var(--ink);
-    color: var(--cream);
-    text-align: left;
-    padding: 10px 14px;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 400;
-  }
-
-  .list-table td {
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--rule);
-    font-size: 13px;
-    vertical-align: middle;
-  }
-
+  .list-table { width: 100%; border-collapse: collapse; border: 1px solid var(--rule); }
+  .list-table th { background: var(--ink); color: var(--cream); text-align: left; padding: 9px 13px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 400; }
+  .list-table td { padding: 9px 13px; border-bottom: 1px solid var(--rule); font-size: 13px; vertical-align: middle; }
   .list-table tr:hover td { background: var(--cream); cursor: pointer; }
   .list-table tr:last-child td { border-bottom: none; }
+  .brand-pill { display: inline-block; padding: 2px 7px; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; border-radius: 2px; font-weight: 500; }
+  .brand-pill.MG  { background: var(--mg-light);  color: var(--mg); }
+  .brand-pill.PP  { background: var(--pp-light);  color: var(--pp); }
+  .brand-pill.BP  { background: var(--bp-light);  color: var(--bp); }
+  .brand-pill.BJ  { background: var(--bj-light);  color: var(--bj); }
+  .brand-pill.AHD { background: var(--ahd-light); color: var(--ahd); }
 
-  /* Brand color indicators */
-  .brand-pill {
-    display: inline-block;
-    padding: 2px 8px;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border-radius: 2px;
-    font-weight: 500;
-  }
-
-  .brand-pill.MG  { background: var(--mg-light); color: var(--mg); }
-  .brand-pill.PP  { background: var(--pp-light); color: var(--pp); }
-  .brand-pill.BP  { background: var(--bp-light); color: var(--bp); }
-  .brand-pill.BJ  { background: var(--bj-light); color: var(--bj); }
-  .brand-pill.AHD { background: #EEEAE4; color: #3A3530; }
-
-  /* Inline edit */
-  .event[contenteditable="true"] { outline: 2px solid var(--ink); }
-
-  /* Quarter dividers in grid */
-  .quarter-label {
-    grid-column: 1 / -1;
-    padding: 8px 0 4px;
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    border-top: 1px solid var(--rule);
-    margin-top: 8px;
-    background: transparent;
-  }
-
-  .q-separator {
-    grid-column: 1 / -1;
-    height: 1px;
-    background: var(--rule);
-  }
-
-  /* Toolbar */
-  .toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .toolbar-left { display: flex; gap: 8px; align-items: center; }
-  .toolbar-right { display: flex; gap: 8px; align-items: center; }
-
-  .search-input {
-    padding: 6px 12px;
-    border: 1px solid var(--rule);
-    background: var(--warm-white);
-    font-family: 'Roboto', sans-serif;
-    font-size: 13px;
-    color: var(--ink);
-    width: 200px;
-    outline: none;
-  }
-
-  .search-input:focus { border-color: var(--ink); }
-
-  /* Responsive */
-  @media (max-width: 900px) {
-    .grid { grid-template-columns: repeat(2, 1fr); }
-    header { padding: 20px; }
-    .main { padding: 16px 20px; }
-    .legend, .brand-bar { padding: 10px 20px; }
-  }
-
-  @media (max-width: 600px) {
-    .grid { grid-template-columns: 1fr; }
-  }
-
-  /* Subtle brand accent on month cell border */
-  .month-cell[data-q="1"] { border-top: 3px solid #C8BFB0; }
-  .month-cell[data-q="2"] { border-top: 3px solid #B8C4BE; }
-  .month-cell[data-q="3"] { border-top: 3px solid #B8C2CE; }
-  .month-cell[data-q="4"] { border-top: 3px solid #C4B8B0; }
-
-  .no-events { color: var(--ink-muted); font-size: 12px; font-style: italic; padding: 4px 0; }
-
-  .export-note {
-    font-size: 12px;
-    color: var(--ink-muted);
-    letter-spacing: 0.05em;
-    padding: 16px 40px 0;
-  }
+  /* ── MODAL ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(28,25,23,0.55); z-index: 400; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--warm-white); width: 460px; max-width: 95vw; max-height: 90vh; overflow-y: auto; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+  .modal h2 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; letter-spacing: 0.08em; margin-bottom: 22px; text-transform: uppercase; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 5px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 7px 10px; border: 1px solid var(--rule); background: var(--cream); font-family: 'Roboto', sans-serif; font-size: 13px; color: var(--ink); outline: none; }
+  .form-group input:focus, .form-group select:focus { border-color: var(--ink); }
+  .form-group textarea { resize: vertical; min-height: 56px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rule); }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-left">
-    <h1>AHD Brand Calendar</h1>
-    <p>Launch &amp; Marketing Schedule — Editable</p>
-  </div>
-  <div class="header-right">
-    <select class="year-select" id="yearSelect" onchange="setYear(this.value)">
-      <option value="2026" selected>2026</option>
-      <option value="2027">2027</option>
-    </select>
-    <button class="btn btn-primary" onclick="openAddModal()">+ Add Event</button>
-    <button class="btn btn-ghost" onclick="exportCSV()">Export CSV</button>
-  </div>
-</header>
+<!-- ALL STICKY CHROME + FROZEN ROWS IN ONE BLOCK -->
+<div id="chrome">
+  <header>
+    <div class="header-left">
+      <h1>AHD Brand Calendar</h1>
+      <p>Launch &amp; Marketing Schedule — Editable</p>
+    </div>
+    <div class="header-right">
+      <select class="year-select" onchange="setYear(this.value)">
+        <option value="2026" selected>2026</option>
+        <option value="2027">2027</option>
+      </select>
+      <button class="btn btn-primary" onclick="openAddModal()">+ Add Event</button>
+      <button class="btn btn-ghost" onclick="exportCSV()">Export CSV</button>
+    </div>
+  </header>
 
-<div class="legend">
-  <span class="legend-label">Key</span>
-  <div class="legend-items">
+  <div class="legend">
+    <span class="legend-label">Key</span>
     <span class="tag launch"><span class="tag-dot" style="background:var(--tag-launch)"></span>Web Launch</span>
     <span class="tag catalog"><span class="tag-dot" style="background:var(--tag-catalog)"></span>Catalog Upload</span>
     <span class="tag pricelist"><span class="tag-dot" style="background:var(--tag-pricelist)"></span>Price List</span>
@@ -600,57 +264,41 @@
     <span class="tag salesrep"><span class="tag-dot" style="background:var(--tag-salesrep)"></span>Sales Rep In-Hand</span>
     <span class="tag customer"><span class="tag-dot" style="background:var(--tag-customer)"></span>Customer In-Hand</span>
   </div>
-</div>
 
-<div class="brand-bar">
-  <button class="brand-tab active" data-brand="ALL" onclick="filterBrand('ALL', this)">All Brands</button>
-  <button class="brand-tab mg" data-brand="MG" onclick="filterBrand('MG', this)">Made Goods</button>
-  <button class="brand-tab pp" data-brand="PP" onclick="filterBrand('PP', this)">Pigeon &amp; Poodle</button>
-  <button class="brand-tab bp" data-brand="BP" onclick="filterBrand('BP', this)">Blue Pheasant</button>
-  <button class="brand-tab bj" data-brand="BJ" onclick="filterBrand('BJ', this)">Burton James</button>
-</div>
-
-<div class="main">
   <div class="toolbar">
-    <div class="toolbar-left">
-      <div class="view-toggle">
-        <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')">Grid</button>
-        <button class="view-btn" id="listViewBtn" onclick="setView('list')">List</button>
-      </div>
-      <input class="search-input" type="text" placeholder="Search events…" oninput="searchEvents(this.value)" id="searchInput">
+    <div class="view-toggle">
+      <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')">Timeline</button>
+      <button class="view-btn" id="listViewBtn" onclick="setView('list')">List</button>
     </div>
-    <div class="toolbar-right" style="font-size: 12px;color:var(--ink-muted);letter-spacing:0.1em;">
-      Click any event to edit &nbsp;·&nbsp; Dates auto-save in browser
-    </div>
+    <input class="search-input" type="text" placeholder="Search events…" oninput="searchEvents(this.value)">
+    <span class="toolbar-note">Click any event to edit &nbsp;·&nbsp; Scroll right to navigate months</span>
   </div>
 
-  <div class="grid-view" id="gridView"></div>
-
-  <div class="list-view" id="listView">
-    <table class="list-table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Brand</th>
-          <th>Event</th>
-          <th>Type</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody id="listBody"></tbody>
-    </table>
+  <!-- FROZEN SCROLL: month headers + trade show row -->
+  <div class="frozen-scroll" id="frozenScroll">
+    <div class="frozen-grid" id="frozenGrid"></div>
   </div>
 </div>
 
-<p class="export-note">Data is saved in your browser's local storage. Use Export CSV to back up or share.</p>
+<!-- SCROLLABLE BRAND ROWS -->
+<div class="body-scroll" id="bodyScroll">
+  <div class="body-grid" id="bodyGrid"></div>
+</div>
 
-<!-- MODAL: Add/Edit Event -->
+<!-- LIST VIEW -->
+<div class="list-view" id="listView">
+  <table class="list-table">
+    <thead><tr><th>Date</th><th>Brand</th><th>Event</th><th>Type</th><th>Notes</th></tr></thead>
+    <tbody id="listBody"></tbody>
+  </table>
+</div>
+
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
     <h2 id="modalTitle">Add Event</h2>
     <div class="form-row">
-      <div class="form-group">
-        <label>Brand</label>
+      <div class="form-group"><label>Brand</label>
         <select id="fBrand">
           <option value="MG">Made Goods</option>
           <option value="PP">Pigeon &amp; Poodle</option>
@@ -659,8 +307,7 @@
           <option value="AHD">AHD (All Brands)</option>
         </select>
       </div>
-      <div class="form-group">
-        <label>Type</label>
+      <div class="form-group"><label>Type</label>
         <select id="fType">
           <option value="launch">Web Launch</option>
           <option value="catalog">Catalog Upload</option>
@@ -672,24 +319,12 @@
         </select>
       </div>
     </div>
-    <div class="form-group">
-      <label>Event Name</label>
-      <input type="text" id="fName" placeholder="e.g. Spring Web Launch">
-    </div>
+    <div class="form-group"><label>Event Name</label><input type="text" id="fName" placeholder="e.g. Spring Web Launch"></div>
     <div class="form-row">
-      <div class="form-group">
-        <label>Start Date</label>
-        <input type="date" id="fStart">
-      </div>
-      <div class="form-group">
-        <label>End Date (optional)</label>
-        <input type="date" id="fEnd">
-      </div>
+      <div class="form-group"><label>Start Date</label><input type="date" id="fStart"></div>
+      <div class="form-group"><label>End Date (optional)</label><input type="date" id="fEnd"></div>
     </div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="fNotes" placeholder="Any additional details…"></textarea>
-    </div>
+    <div class="form-group"><label>Notes</label><textarea id="fNotes" placeholder="Any additional details…"></textarea></div>
     <div class="modal-actions">
       <button class="btn btn-danger" id="deleteBtn" onclick="deleteEvent()" style="display:none">Delete</button>
       <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
@@ -699,311 +334,249 @@
 </div>
 
 <script>
-// ─── DATA ────────────────────────────────────────────────────────────────────
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const BRAND_NAMES = { MG: 'Made Goods', PP: 'Pigeon & Poodle', BP: 'Blue Pheasant', BJ: 'Burton James', AHD: 'AHD' };
+const BRAND_ORDER = ['MG','PP','BP','BJ'];
+const BRAND_NAMES = { MG:'Made Goods', PP:'Pigeon & Poodle', BP:'Blue Pheasant', BJ:'Burton James', AHD:'AHD' };
 const TYPE_LABELS = { launch:'Web Launch', catalog:'Catalog Upload', pricelist:'Price List', tradeshow:'Trade Show', maildrop:'Mail Drop', salesrep:'Sales Rep In-Hand', customer:'Customer In-Hand' };
 
-const DEFAULT_EVENTS_2026 = [
-  // ── MADE GOODS SPRING ──
-  { id:'e1',  brand:'MG', type:'launch',    name:'Spring Web Launch',         start:'2026-01-28', end:'',         notes:'MG Spring \'26 main launch' },
-  { id:'e2',  brand:'MG', type:'pricelist', name:'Digital Price List',        start:'2026-01-28', end:'',         notes:'Spring price list goes live' },
-  { id:'e3',  brand:'MG', type:'catalog',   name:'What\'s New Catalog Upload',start:'2026-02-09', end:'',         notes:'Catalog goes live on site' },
-  { id:'e4',  brand:'MG', type:'maildrop',  name:'What\'s New Mail Drop',     start:'2026-02-09', end:'',         notes:'Customer catalog shipping' },
-  { id:'e5',  brand:'MG', type:'customer',  name:'What\'s New In-Hand',       start:'2026-02-13', end:'2026-02-18', notes:'Customer in-hand window' },
-  { id:'e6',  brand:'MG', type:'salesrep',  name:'What\'s New Sales Rep',     start:'2026-02-05', end:'2026-02-09', notes:'Sales rep in-hand window' },
-  // ── MG BATH ──
-  { id:'e7',  brand:'MG', type:'launch',    name:'Bath Web Launch',           start:'2026-04-01', end:'',         notes:'' },
-  { id:'e8',  brand:'MG', type:'pricelist', name:'Bath Digital Price List',   start:'2026-04-01', end:'',         notes:'' },
-  { id:'e9',  brand:'MG', type:'salesrep',  name:'Bath Catalog Sales Rep',    start:'2026-03-27', end:'2026-03-31', notes:'Sales rep in-hand' },
-  { id:'e10', brand:'MG', type:'catalog',   name:'Bath Catalog Upload',       start:'2026-04-01', end:'',         notes:'Estimated — confirm with print team' },
-  // ── MG FALL ──
-  { id:'e11', brand:'MG', type:'launch',    name:'Fall Web Launch',           start:'2026-08-19', end:'',         notes:'' },
-  { id:'e12', brand:'MG', type:'pricelist', name:'Fall Digital Price List',   start:'2026-08-19', end:'',         notes:'' },
-  { id:'e13', brand:'MG', type:'salesrep',  name:'Fall What\'s New Sales Rep',start:'2026-08-23', end:'',         notes:'' },
-  { id:'e14', brand:'MG', type:'maildrop',  name:'Fall What\'s New Mail Drop',start:'2026-08-18', end:'',         notes:'Customer catalog shipping' },
-  { id:'e15', brand:'MG', type:'customer',  name:'Fall What\'s New In-Hand',  start:'2026-08-30', end:'',         notes:'' },
-  { id:'e16', brand:'MG', type:'catalog',   name:'Fall Catalog Upload',       start:'2026-08-18', end:'',         notes:'Estimated — confirm with print team' },
-  // ── MG OUTDOOR ──
-  { id:'e17', brand:'MG', type:'launch',    name:'Outdoor Web Launch',        start:'2026-09-30', end:'',         notes:'' },
-  { id:'e18', brand:'MG', type:'pricelist', name:'Outdoor Digital Price List',start:'2026-09-30', end:'',         notes:'' },
-  // ── MG FOLD OUTS / PRINTED ──
-  { id:'e19', brand:'MG', type:'salesrep',  name:'Interchangeables Fold Out', start:'2026-03-27', end:'2026-03-31', notes:'Sales reps only, no customer mailing' },
-  { id:'e20', brand:'MG', type:'salesrep',  name:'Outdoor Binder',            start:'2026-03-27', end:'2026-03-31', notes:'Sales reps only' },
-  { id:'e21', brand:'MG', type:'salesrep',  name:'Bath Folder w/Inserts',     start:'2026-05-06', end:'2026-05-08', notes:'Sales reps only' },
-  { id:'e22', brand:'MG', type:'salesrep',  name:'June Fold Out – AHD',       start:'2026-06-29', end:'2026-06-30', notes:'Sales reps only' },
-  { id:'e23', brand:'MG', type:'salesrep',  name:'Sept Fold Out – TBD Dining',start:'2026-09-29', end:'2026-09-30', notes:'Sales reps only' },
-  { id:'e24', brand:'MG', type:'salesrep',  name:'Dec Fold Out – Finishing Touches', start:'2026-12-27', end:'2026-12-28', notes:'Sales reps only' },
-  // ── PIGEON & POODLE SPRING ──
-  { id:'e25', brand:'PP', type:'launch',    name:'Spring Web Launch',         start:'2026-01-07', end:'',         notes:'' },
-  { id:'e26', brand:'PP', type:'pricelist', name:'Digital Price List',        start:'2026-01-07', end:'',         notes:'Spring' },
-  { id:'e27', brand:'PP', type:'pricelist', name:'Printed Price List Sales Rep', start:'2026-02-16', end:'',     notes:'Printed price list in-hand' },
-  { id:'e28', brand:'PP', type:'salesrep',  name:'Spring Catalog Sales Rep',  start:'2026-02-23', end:'',         notes:'' },
-  { id:'e29', brand:'PP', type:'maildrop',  name:'Spring Catalog Mail Drop',  start:'2026-02-23', end:'',         notes:'Customer catalog shipping' },
-  { id:'e30', brand:'PP', type:'customer',  name:'Spring Catalog In-Hand',    start:'2026-03-02', end:'',         notes:'' },
-  { id:'e31', brand:'PP', type:'catalog',   name:'Spring Catalog Upload',     start:'2026-03-02', end:'',         notes:'Estimated — confirm with print team' },
-  // ── PIGEON & POODLE FALL ──
-  { id:'e32', brand:'PP', type:'launch',    name:'Fall Web Launch',           start:'2026-06-03', end:'',         notes:'' },
-  { id:'e33', brand:'PP', type:'pricelist', name:'Fall Digital Price List',   start:'2026-06-03', end:'',         notes:'' },
-  { id:'e34', brand:'PP', type:'salesrep',  name:'Fall Catalog Sales Rep',    start:'2026-06-01', end:'',         notes:'' },
-  { id:'e35', brand:'PP', type:'maildrop',  name:'Fall Catalog Mail Drop',    start:'2026-06-08', end:'',         notes:'Customer catalog shipping' },
-  { id:'e36', brand:'PP', type:'customer',  name:'Fall Catalog In-Hand',      start:'2026-06-15', end:'',         notes:'' },
-  { id:'e37', brand:'PP', type:'catalog',   name:'Fall Catalog Upload',       start:'2026-06-22', end:'',         notes:'' },
-  // ── BLUE PHEASANT SPRING ──
-  { id:'e38', brand:'BP', type:'launch',    name:'Spring Web Launch',         start:'2026-01-07', end:'',         notes:'' },
-  { id:'e39', brand:'BP', type:'pricelist', name:'Digital Price List',        start:'2026-01-07', end:'',         notes:'Spring' },
-  { id:'e40', brand:'BP', type:'pricelist', name:'Printed Price List Sales Rep', start:'2026-02-16', end:'',     notes:'' },
-  { id:'e41', brand:'BP', type:'salesrep',  name:'Spring Catalog Sales Rep',  start:'2026-02-23', end:'',         notes:'' },
-  { id:'e42', brand:'BP', type:'maildrop',  name:'Spring Catalog Mail Drop',  start:'2026-02-23', end:'',         notes:'Customer catalog shipping' },
-  { id:'e43', brand:'BP', type:'customer',  name:'Spring Catalog In-Hand',    start:'2026-03-02', end:'',         notes:'' },
-  { id:'e44', brand:'BP', type:'catalog',   name:'Spring Catalog Upload',     start:'2026-03-02', end:'',         notes:'Estimated — confirm' },
-  { id:'e45', brand:'BP', type:'salesrep',  name:'Entertaining Registry Sales Rep', start:'2026-04-06', end:'',  notes:'No customer mailing' },
-  // ── BLUE PHEASANT FALL ──
-  { id:'e46', brand:'BP', type:'launch',    name:'Fall Web Launch',           start:'2026-06-03', end:'',         notes:'' },
-  { id:'e47', brand:'BP', type:'pricelist', name:'Fall Digital Price List',   start:'2026-06-03', end:'',         notes:'' },
-  { id:'e48', brand:'BP', type:'salesrep',  name:'Fall Catalog Sales Rep',    start:'2026-06-01', end:'',         notes:'' },
-  { id:'e49', brand:'BP', type:'maildrop',  name:'Fall Catalog Mail Drop',    start:'2026-06-08', end:'',         notes:'Customer catalog shipping' },
-  { id:'e50', brand:'BP', type:'customer',  name:'Fall Catalog In-Hand',      start:'2026-06-15', end:'',         notes:'' },
-  { id:'e51', brand:'BP', type:'catalog',   name:'Fall Catalog Upload',       start:'2026-06-22', end:'',         notes:'' },
-  { id:'e52', brand:'BP', type:'salesrep',  name:'Swirled Resin Sales Rep',   start:'2026-06-01', end:'',         notes:'Sales reps only' },
-  // ── BURTON JAMES ──
-  { id:'e53', brand:'BJ', type:'launch',    name:'Spring Web Launch',         start:'2026-04-08', end:'',         notes:'' },
-  { id:'e54', brand:'BJ', type:'pricelist', name:'Spring Digital Price List', start:'2026-04-08', end:'',         notes:'' },
-  { id:'e55', brand:'BJ', type:'salesrep',  name:'Spring Binders Sales Rep',  start:'2026-05-03', end:'',         notes:'No customer mailing' },
-  { id:'e56', brand:'BJ', type:'maildrop',  name:'Spring HP Mailer Drop',     start:'2026-04-06', end:'2026-04-10', notes:'Customer mailer shipping' },
-  { id:'e57', brand:'BJ', type:'launch',    name:'Fall Web Launch',           start:'2026-10-07', end:'',         notes:'' },
-  { id:'e58', brand:'BJ', type:'pricelist', name:'Fall Digital Price List',   start:'2026-10-07', end:'',         notes:'' },
-  { id:'e59', brand:'BJ', type:'maildrop',  name:'Fall HP Mailer Drop',       start:'2026-09-17', end:'',         notes:'Customer mailer shipping' },
-  { id:'e60', brand:'BJ', type:'customer',  name:'Fall HP Mailer In-Hand',    start:'2026-09-24', end:'',         notes:'' },
-  { id:'e61', brand:'BJ', type:'salesrep',  name:'Fall Look Book Sales Rep',  start:'2026-10-26', end:'',         notes:'' },
-  { id:'e62', brand:'BJ', type:'maildrop',  name:'Fall Look Book Mail Drop',  start:'2026-10-26', end:'',         notes:'Customer catalog shipping' },
-  { id:'e63', brand:'BJ', type:'catalog',   name:'Fall Look Book Upload',     start:'2026-10-26', end:'',         notes:'Estimated — confirm' },
-  // ── TRADE SHOWS ──
-  { id:'e64', brand:'AHD', type:'tradeshow', name:'Atlanta Gift & Home',      start:'2026-01-13', end:'2026-01-19', notes:'All brands' },
-  { id:'e65', brand:'MG',  type:'tradeshow', name:'Spring High Point',        start:'2026-04-22', end:'2026-04-29', notes:'MG, PP, BP, BJ' },
-  { id:'e66', brand:'BP',  type:'tradeshow', name:'NY Tabletop Show',         start:'2026-04-14', end:'2026-04-17', notes:'Blue Pheasant' },
-  { id:'e67', brand:'AHD', type:'tradeshow', name:'Atlanta Gift & Home',      start:'2026-06-09', end:'2026-06-14', notes:'All brands' },
-  { id:'e68', brand:'BP',  type:'tradeshow', name:'NY Tabletop Show (Fall)',  start:'2026-10-06', end:'2026-10-09', notes:'Blue Pheasant' },
-  { id:'e69', brand:'AHD', type:'tradeshow', name:'Fall High Point',          start:'2026-10-17', end:'2026-10-21', notes:'MG, PP, BP, BJ' },
-  // ── AHD SPRING HP MAILER ──
-  { id:'e70', brand:'AHD', type:'customer',  name:'AHD Spring HP Mailer In-Hand', start:'2026-03-20', end:'2026-03-25', notes:'' },
+const SEED = [
+  {id:'e1', brand:'MG', type:'launch',    name:'Spring Web Launch',               start:'2026-01-28',end:'',           notes:"MG Spring '26 main launch"},
+  {id:'e2', brand:'MG', type:'pricelist', name:'Digital Price List',              start:'2026-01-28',end:'',           notes:'Spring price list goes live'},
+  {id:'e3', brand:'MG', type:'catalog',   name:"What's New Catalog Upload",       start:'2026-02-09',end:'',           notes:'Catalog goes live on site'},
+  {id:'e4', brand:'MG', type:'maildrop',  name:"What's New Mail Drop",            start:'2026-02-09',end:'',           notes:'Customer catalog shipping'},
+  {id:'e5', brand:'MG', type:'customer',  name:"What's New In-Hand",              start:'2026-02-13',end:'2026-02-18',notes:'Customer in-hand window'},
+  {id:'e6', brand:'MG', type:'salesrep',  name:"What's New Sales Rep",            start:'2026-02-05',end:'2026-02-09',notes:'Sales rep in-hand window'},
+  {id:'e7', brand:'MG', type:'launch',    name:'Bath Web Launch',                 start:'2026-04-01',end:'',           notes:''},
+  {id:'e8', brand:'MG', type:'pricelist', name:'Bath Digital Price List',         start:'2026-04-01',end:'',           notes:''},
+  {id:'e9', brand:'MG', type:'salesrep',  name:'Bath Catalog Sales Rep',          start:'2026-03-27',end:'2026-03-31',notes:'Sales rep in-hand'},
+  {id:'e10',brand:'MG', type:'catalog',   name:'Bath Catalog Upload',             start:'2026-04-01',end:'',           notes:'Confirm with print team'},
+  {id:'e11',brand:'MG', type:'launch',    name:'Fall Web Launch',                 start:'2026-08-19',end:'',           notes:''},
+  {id:'e12',brand:'MG', type:'pricelist', name:'Fall Digital Price List',         start:'2026-08-19',end:'',           notes:''},
+  {id:'e13',brand:'MG', type:'salesrep',  name:"Fall What's New Sales Rep",       start:'2026-08-23',end:'',           notes:''},
+  {id:'e14',brand:'MG', type:'maildrop',  name:"Fall What's New Mail Drop",       start:'2026-08-18',end:'',           notes:'Customer catalog shipping'},
+  {id:'e15',brand:'MG', type:'customer',  name:"Fall What's New In-Hand",         start:'2026-08-30',end:'',           notes:''},
+  {id:'e16',brand:'MG', type:'catalog',   name:'Fall Catalog Upload',             start:'2026-08-18',end:'',           notes:'Confirm with print team'},
+  {id:'e17',brand:'MG', type:'launch',    name:'Outdoor Web Launch',              start:'2026-09-30',end:'',           notes:''},
+  {id:'e18',brand:'MG', type:'pricelist', name:'Outdoor Digital Price List',      start:'2026-09-30',end:'',           notes:''},
+  {id:'e19',brand:'MG', type:'salesrep',  name:'Interchangeables Fold Out',       start:'2026-03-27',end:'2026-03-31',notes:'Sales reps only'},
+  {id:'e20',brand:'MG', type:'salesrep',  name:'Outdoor Binder',                  start:'2026-03-27',end:'2026-03-31',notes:'Sales reps only'},
+  {id:'e21',brand:'MG', type:'salesrep',  name:'Bath Folder w/Inserts',           start:'2026-05-06',end:'2026-05-08',notes:'Sales reps only'},
+  {id:'e22',brand:'MG', type:'salesrep',  name:'June Fold Out - AHD',             start:'2026-06-29',end:'2026-06-30',notes:'Sales reps only'},
+  {id:'e23',brand:'MG', type:'salesrep',  name:'Sept Fold Out - TBD Dining',      start:'2026-09-29',end:'2026-09-30',notes:'Sales reps only'},
+  {id:'e24',brand:'MG', type:'salesrep',  name:'Dec Fold Out - Finishing Touches',start:'2026-12-27',end:'2026-12-28',notes:'Sales reps only'},
+  {id:'e25',brand:'PP', type:'launch',    name:'Spring Web Launch',               start:'2026-01-07',end:'',           notes:''},
+  {id:'e26',brand:'PP', type:'pricelist', name:'Digital Price List',              start:'2026-01-07',end:'',           notes:'Spring'},
+  {id:'e27',brand:'PP', type:'pricelist', name:'Printed Price List Sales Rep',    start:'2026-02-16',end:'',           notes:'Printed price list in-hand'},
+  {id:'e28',brand:'PP', type:'salesrep',  name:'Spring Catalog Sales Rep',        start:'2026-02-23',end:'',           notes:''},
+  {id:'e29',brand:'PP', type:'maildrop',  name:'Spring Catalog Mail Drop',        start:'2026-02-23',end:'',           notes:'Customer catalog shipping'},
+  {id:'e30',brand:'PP', type:'customer',  name:'Spring Catalog In-Hand',          start:'2026-03-02',end:'',           notes:''},
+  {id:'e31',brand:'PP', type:'catalog',   name:'Spring Catalog Upload',           start:'2026-03-02',end:'',           notes:'Confirm with print team'},
+  {id:'e32',brand:'PP', type:'launch',    name:'Fall Web Launch',                 start:'2026-06-03',end:'',           notes:''},
+  {id:'e33',brand:'PP', type:'pricelist', name:'Fall Digital Price List',         start:'2026-06-03',end:'',           notes:''},
+  {id:'e34',brand:'PP', type:'salesrep',  name:'Fall Catalog Sales Rep',          start:'2026-06-01',end:'',           notes:''},
+  {id:'e35',brand:'PP', type:'maildrop',  name:'Fall Catalog Mail Drop',          start:'2026-06-08',end:'',           notes:'Customer catalog shipping'},
+  {id:'e36',brand:'PP', type:'customer',  name:'Fall Catalog In-Hand',            start:'2026-06-15',end:'',           notes:''},
+  {id:'e37',brand:'PP', type:'catalog',   name:'Fall Catalog Upload',             start:'2026-06-22',end:'',           notes:''},
+  {id:'e38',brand:'BP', type:'launch',    name:'Spring Web Launch',               start:'2026-01-07',end:'',           notes:''},
+  {id:'e39',brand:'BP', type:'pricelist', name:'Digital Price List',              start:'2026-01-07',end:'',           notes:'Spring'},
+  {id:'e40',brand:'BP', type:'pricelist', name:'Printed Price List Sales Rep',    start:'2026-02-16',end:'',           notes:''},
+  {id:'e41',brand:'BP', type:'salesrep',  name:'Spring Catalog Sales Rep',        start:'2026-02-23',end:'',           notes:''},
+  {id:'e42',brand:'BP', type:'maildrop',  name:'Spring Catalog Mail Drop',        start:'2026-02-23',end:'',           notes:'Customer catalog shipping'},
+  {id:'e43',brand:'BP', type:'customer',  name:'Spring Catalog In-Hand',          start:'2026-03-02',end:'',           notes:''},
+  {id:'e44',brand:'BP', type:'catalog',   name:'Spring Catalog Upload',           start:'2026-03-02',end:'',           notes:'Confirm with print team'},
+  {id:'e45',brand:'BP', type:'salesrep',  name:'Entertaining Registry Sales Rep', start:'2026-04-06',end:'',           notes:'No customer mailing'},
+  {id:'e46',brand:'BP', type:'launch',    name:'Fall Web Launch',                 start:'2026-06-03',end:'',           notes:''},
+  {id:'e47',brand:'BP', type:'pricelist', name:'Fall Digital Price List',         start:'2026-06-03',end:'',           notes:''},
+  {id:'e48',brand:'BP', type:'salesrep',  name:'Fall Catalog Sales Rep',          start:'2026-06-01',end:'',           notes:''},
+  {id:'e49',brand:'BP', type:'maildrop',  name:'Fall Catalog Mail Drop',          start:'2026-06-08',end:'',           notes:'Customer catalog shipping'},
+  {id:'e50',brand:'BP', type:'customer',  name:'Fall Catalog In-Hand',            start:'2026-06-15',end:'',           notes:''},
+  {id:'e51',brand:'BP', type:'catalog',   name:'Fall Catalog Upload',             start:'2026-06-22',end:'',           notes:''},
+  {id:'e52',brand:'BP', type:'salesrep',  name:'Swirled Resin Sales Rep',         start:'2026-06-01',end:'',           notes:'Sales reps only'},
+  {id:'e53',brand:'BJ', type:'launch',    name:'Spring Web Launch',               start:'2026-04-08',end:'',           notes:''},
+  {id:'e54',brand:'BJ', type:'pricelist', name:'Spring Digital Price List',       start:'2026-04-08',end:'',           notes:''},
+  {id:'e55',brand:'BJ', type:'salesrep',  name:'Spring Binders Sales Rep',        start:'2026-05-03',end:'',           notes:'No customer mailing'},
+  {id:'e56',brand:'BJ', type:'maildrop',  name:'Spring HP Mailer Drop',           start:'2026-04-06',end:'2026-04-10',notes:'Customer mailer shipping'},
+  {id:'e57',brand:'BJ', type:'launch',    name:'Fall Web Launch',                 start:'2026-10-07',end:'',           notes:''},
+  {id:'e58',brand:'BJ', type:'pricelist', name:'Fall Digital Price List',         start:'2026-10-07',end:'',           notes:''},
+  {id:'e59',brand:'BJ', type:'maildrop',  name:'Fall HP Mailer Drop',             start:'2026-09-17',end:'',           notes:'Customer mailer shipping'},
+  {id:'e60',brand:'BJ', type:'customer',  name:'Fall HP Mailer In-Hand',          start:'2026-09-24',end:'',           notes:''},
+  {id:'e61',brand:'BJ', type:'salesrep',  name:'Fall Look Book Sales Rep',        start:'2026-10-26',end:'',           notes:''},
+  {id:'e62',brand:'BJ', type:'maildrop',  name:'Fall Look Book Mail Drop',        start:'2026-10-26',end:'',           notes:'Customer catalog shipping'},
+  {id:'e63',brand:'BJ', type:'catalog',   name:'Fall Look Book Upload',           start:'2026-10-26',end:'',           notes:'Confirm with print team'},
+  {id:'e64',brand:'AHD',type:'tradeshow', name:'Atlanta Gift & Home',             start:'2026-01-13',end:'2026-01-19',notes:'All brands'},
+  {id:'e65',brand:'AHD',type:'tradeshow', name:'Spring High Point',               start:'2026-04-22',end:'2026-04-29',notes:'MG, PP, BP, BJ'},
+  {id:'e66',brand:'AHD',type:'tradeshow', name:'NY Tabletop Show',                start:'2026-04-14',end:'2026-04-17',notes:'Blue Pheasant'},
+  {id:'e67',brand:'AHD',type:'tradeshow', name:'Atlanta Gift & Home',             start:'2026-06-09',end:'2026-06-14',notes:'All brands'},
+  {id:'e68',brand:'AHD',type:'tradeshow', name:'NY Tabletop Show (Fall)',         start:'2026-10-06',end:'2026-10-09',notes:'Blue Pheasant'},
+  {id:'e69',brand:'AHD',type:'tradeshow', name:'Fall High Point',                 start:'2026-10-17',end:'2026-10-21',notes:'MG, PP, BP, BJ'},
+  {id:'e70',brand:'AHD',type:'customer',  name:'AHD Spring HP Mailer In-Hand',   start:'2026-03-20',end:'2026-03-25',notes:''},
 ];
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
-let currentYear = '2026';
-let currentBrand = 'ALL';
-let currentView = 'grid';
-let editingId = null;
-let searchQuery = '';
-let events = {};
+let currentYear='2026', currentView='grid', editingId=null, searchQuery='', events={};
 
-function loadData() {
-  try {
-    const stored = localStorage.getItem('ahd_calendar_events');
-    if (stored) {
-      events = JSON.parse(stored);
-    } else {
-      // Seed with defaults
-      events = {};
-      DEFAULT_EVENTS_2026.forEach(e => { events[e.id] = e; });
-      saveData();
-    }
-  } catch(e) {
-    events = {};
-    DEFAULT_EVENTS_2026.forEach(e => { events[e.id] = e; });
-  }
+function loadData(){
+  try{
+    const s=localStorage.getItem('ahd_cal_v4');
+    if(s){events=JSON.parse(s);}
+    else{events={};SEED.forEach(e=>{events[e.id]=e;});saveData();}
+  }catch(e){events={};SEED.forEach(e=>{events[e.id]=e;});}
+}
+function saveData(){try{localStorage.setItem('ahd_cal_v4',JSON.stringify(events));}catch(e){}}
+
+function eventsFor(year,brand,mi){
+  return Object.values(events).filter(e=>{
+    if(!e.start||!e.start.startsWith(year))return false;
+    if(parseInt(e.start.split('-')[1],10)-1!==mi)return false;
+    if(e.brand!==brand)return false;
+    if(searchQuery&&!e.name.toLowerCase().includes(searchQuery)&&!(e.notes||'').toLowerCase().includes(searchQuery))return false;
+    return true;
+  }).sort((a,b)=>a.start.localeCompare(b.start));
 }
 
-function saveData() {
-  try { localStorage.setItem('ahd_calendar_events', JSON.stringify(events)); } catch(e) {}
+function render(){renderFrozen();renderBody();renderList();}
+
+function renderFrozen(){
+  const g=document.getElementById('frozenGrid');
+  let h='';
+  // Row 1: corner + month headers
+  h+=`<div class="f-corner"></div>`;
+  MONTHS.forEach((m,i)=>{
+    h+=`<div class="f-month"><span>${m}</span><span class="f-month-num">${String(i+1).padStart(2,'0')}</span></div>`;
+  });
+  // Row 2: AHD label + trade show cells
+  h+=`<div class="f-corner-ts"><span class="brand-label-name">Trade Shows</span><span class="brand-label-tag">AHD</span></div>`;
+  MONTHS.forEach((m,mi)=>{
+    const evs=eventsFor(currentYear,'AHD',mi);
+    const chips=evs.map(e=>`<div class="event ${e.type}" onclick="openEdit('${e.id}')" title="${(e.notes||'').replace(/"/g,'&quot;')}"><div class="event-name">${e.name}</div><div class="event-date">${fmtRange(e.start,e.end)}</div></div>`).join('');
+    const dateStr=`${currentYear}-${String(mi+1).padStart(2,'0')}-01`;
+    h+=`<div class="f-ts-cell${mi%2===1?' even-col':''}">${chips}<button class="add-cell-btn" onclick="openAddModal('${dateStr}','AHD')" title="Add event">+</button></div>`;
+  });
+  g.innerHTML=h;
 }
 
-function getEventsForYear(year) {
-  return Object.values(events).filter(e => e.start && e.start.startsWith(year));
-}
-
-function getEventsForMonth(year, monthIdx) {
-  return getEventsForYear(year).filter(e => {
-    const m = parseInt(e.start.split('-')[1], 10) - 1;
-    return m === monthIdx;
-  }).filter(e => currentBrand === 'ALL' || e.brand === currentBrand)
-    .filter(e => !searchQuery || e.name.toLowerCase().includes(searchQuery) || e.notes.toLowerCase().includes(searchQuery));
-}
-
-// ─── RENDER ──────────────────────────────────────────────────────────────────
-function render() {
-  renderGrid();
-  renderList();
-}
-
-function renderGrid() {
-  const container = document.getElementById('gridView');
-  const quarters = [[0,1,2],[3,4,5],[6,7,8],[9,10,11]];
-  let html = '';
-
-  quarters.forEach((months, qi) => {
-    html += `<div class="q-separator" style="grid-column:1/-1;${qi===0?'display:none':''}"></div>`;
-    html += `<div style="grid-column:1/-1;padding:12px 0 6px;font-size: 11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--ink-muted);">Q${qi+1}</div>`;
-    months.forEach(mi => {
-      const evs = getEventsForMonth(currentYear, mi);
-      const evHtml = evs.length
-        ? evs.sort((a,b)=>a.start.localeCompare(b.start)).map(e => `
-          <div class="event ${e.type}" onclick="openEdit('${e.id}')" title="${e.notes||''}">
-            <div class="event-brand">${BRAND_NAMES[e.brand]||e.brand}</div>
-            <div class="event-name">${e.name}</div>
-            <div class="event-date">${formatDateRange(e.start, e.end)}</div>
-          </div>`).join('')
-        : `<div class="no-events">No events</div>`;
-
-      html += `
-        <div class="month-cell" data-q="${qi+1}">
-          <div class="month-name">
-            <span>${MONTHS[mi]}</span>
-            <span class="month-num">${String(mi+1).padStart(2,'0')}</span>
-          </div>
-          <div class="events-list">${evHtml}</div>
-          <button class="add-event-btn" onclick="openAddModal('${currentYear}-${String(mi+1).padStart(2,'0')}-01')" title="Add event">+</button>
-        </div>`;
+function renderBody(){
+  const g=document.getElementById('bodyGrid');
+  let h='';
+  BRAND_ORDER.forEach(brand=>{
+    h+=`<div class="cal-brand-label ${brand}"><span class="brand-label-name">${BRAND_NAMES[brand]}</span><span class="brand-label-tag ${brand}">${brand}</span></div>`;
+    MONTHS.forEach((m,mi)=>{
+      const evs=eventsFor(currentYear,brand,mi);
+      const chips=evs.map(e=>`<div class="event ${e.type}" onclick="openEdit('${e.id}')" title="${(e.notes||'').replace(/"/g,'&quot;')}"><div class="event-name">${e.name}</div><div class="event-date">${fmtRange(e.start,e.end)}</div></div>`).join('');
+      const dateStr=`${currentYear}-${String(mi+1).padStart(2,'0')}-01`;
+      h+=`<div class="cal-cell${mi%2===1?' even-col':''}">${chips}<button class="add-cell-btn" onclick="openAddModal('${dateStr}','${brand}')" title="Add event">+</button></div>`;
     });
   });
-
-  container.innerHTML = `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);">${html}</div>`;
+  g.innerHTML=h;
 }
 
-function renderList() {
-  const tbody = document.getElementById('listBody');
-  const all = getEventsForYear(currentYear)
-    .filter(e => currentBrand === 'ALL' || e.brand === currentBrand)
-    .filter(e => !searchQuery || e.name.toLowerCase().includes(searchQuery) || (e.notes||'').toLowerCase().includes(searchQuery))
-    .sort((a,b) => a.start.localeCompare(b.start));
-
-  tbody.innerHTML = all.map(e => `
-    <tr onclick="openEdit('${e.id}')">
-      <td>${formatDateRange(e.start, e.end)}</td>
-      <td><span class="brand-pill ${e.brand}">${e.brand}</span></td>
-      <td>${e.name}</td>
-      <td><span class="tag ${e.type}" style="cursor:default">${TYPE_LABELS[e.type]||e.type}</span></td>
-      <td style="color:var(--ink-muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.notes||''}</td>
-    </tr>`).join('') || `<tr><td colspan="5" style="color:var(--ink-muted);text-align:center;padding:24px">No events found</td></tr>`;
+function renderList(){
+  const tbody=document.getElementById('listBody');
+  const all=Object.values(events)
+    .filter(e=>e.start&&e.start.startsWith(currentYear))
+    .filter(e=>!searchQuery||e.name.toLowerCase().includes(searchQuery)||(e.notes||'').toLowerCase().includes(searchQuery))
+    .sort((a,b)=>{
+      if(a.start!==b.start)return a.start.localeCompare(b.start);
+      const bo=[...BRAND_ORDER,'AHD'];
+      return bo.indexOf(a.brand)-bo.indexOf(b.brand);
+    });
+  tbody.innerHTML=all.map(e=>`<tr onclick="openEdit('${e.id}')"><td>${fmtRange(e.start,e.end)}</td><td><span class="brand-pill ${e.brand}">${e.brand}</span></td><td>${e.name}</td><td><span class="tag ${e.type}">${TYPE_LABELS[e.type]||e.type}</span></td><td style="color:var(--ink-muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.notes||''}</td></tr>`).join('')||`<tr><td colspan="5" style="color:var(--ink-muted);text-align:center;padding:24px">No events found</td></tr>`;
 }
 
-function formatDateRange(start, end) {
-  if (!start) return '—';
-  const s = formatDate(start);
-  if (!end || end === start) return s;
-  const ed = end.split('-');
-  const sd = start.split('-');
-  // Same month: show "Jan 13–19"
-  if (ed[0]===sd[0] && ed[1]===sd[1]) {
-    return `${s}–${parseInt(ed[2])}`;
-  }
-  return `${s} – ${formatDate(end)}`;
+function fmtRange(s,e){
+  if(!s)return'—';
+  const sd=s.split('-'),ed=(e||'').split('-');
+  const sf=`${MONTHS[parseInt(sd[1])-1].slice(0,3)} ${parseInt(sd[2])}`;
+  if(!e||e===''||e===s)return sf;
+  if(ed[0]===sd[0]&&ed[1]===sd[1])return`${sf}\u2013${parseInt(ed[2])}`;
+  return`${sf} \u2013 ${MONTHS[parseInt(ed[1])-1].slice(0,3)} ${parseInt(ed[2])}`;
 }
 
-function formatDate(dateStr) {
-  if (!dateStr) return '';
-  const [y,m,d] = dateStr.split('-');
-  return `${MONTHS[parseInt(m)-1].slice(0,3)} ${parseInt(d)}`;
+// Sync horizontal scroll between frozen and body
+function syncScroll(){
+  const frozen=document.getElementById('frozenScroll');
+  const body=document.getElementById('bodyScroll');
+  body.addEventListener('scroll',()=>{ frozen.scrollLeft=body.scrollLeft; });
+  frozen.addEventListener('scroll',()=>{ body.scrollLeft=frozen.scrollLeft; });
 }
 
-// ─── MODAL ───────────────────────────────────────────────────────────────────
-function openAddModal(defaultDate) {
-  editingId = null;
-  document.getElementById('modalTitle').textContent = 'Add Event';
-  document.getElementById('deleteBtn').style.display = 'none';
-  document.getElementById('fBrand').value = currentBrand === 'ALL' ? 'MG' : currentBrand;
-  document.getElementById('fType').value = 'launch';
-  document.getElementById('fName').value = '';
-  document.getElementById('fStart').value = defaultDate || `${currentYear}-01-01`;
-  document.getElementById('fEnd').value = '';
-  document.getElementById('fNotes').value = '';
+function openAddModal(d,b){
+  editingId=null;
+  document.getElementById('modalTitle').textContent='Add Event';
+  document.getElementById('deleteBtn').style.display='none';
+  document.getElementById('fBrand').value=b||'MG';
+  document.getElementById('fType').value = b==='AHD' ? 'tradeshow' : 'launch';
+  document.getElementById('fName').value='';
+  document.getElementById('fStart').value=d||`${currentYear}-01-01`;
+  document.getElementById('fEnd').value='';
+  document.getElementById('fNotes').value='';
   document.getElementById('modalOverlay').classList.add('open');
 }
 
-function openEdit(id) {
-  const e = events[id];
-  if (!e) return;
-  editingId = id;
-  document.getElementById('modalTitle').textContent = 'Edit Event';
-  document.getElementById('deleteBtn').style.display = 'block';
-  document.getElementById('fBrand').value = e.brand;
-  document.getElementById('fType').value = e.type;
-  document.getElementById('fName').value = e.name;
-  document.getElementById('fStart').value = e.start;
-  document.getElementById('fEnd').value = e.end || '';
-  document.getElementById('fNotes').value = e.notes || '';
+function openEdit(id){
+  const e=events[id];if(!e)return;
+  editingId=id;
+  document.getElementById('modalTitle').textContent='Edit Event';
+  document.getElementById('deleteBtn').style.display='block';
+  document.getElementById('fBrand').value=e.brand;
+  document.getElementById('fType').value=e.type;
+  document.getElementById('fName').value=e.name;
+  document.getElementById('fStart').value=e.start;
+  document.getElementById('fEnd').value=e.end||'';
+  document.getElementById('fNotes').value=e.notes||'';
   document.getElementById('modalOverlay').classList.add('open');
 }
 
-function closeModal(e) {
-  if (e && e.target !== document.getElementById('modalOverlay')) return;
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modalOverlay'))return;
   document.getElementById('modalOverlay').classList.remove('open');
 }
 
-function saveEvent() {
-  const brand = document.getElementById('fBrand').value;
-  const type  = document.getElementById('fType').value;
-  const name  = document.getElementById('fName').value.trim();
-  const start = document.getElementById('fStart').value;
-  const end   = document.getElementById('fEnd').value;
-  const notes = document.getElementById('fNotes').value.trim();
-
-  if (!name || !start) { alert('Name and start date are required.'); return; }
-
-  const id = editingId || ('e_' + Date.now());
-  events[id] = { id, brand, type, name, start, end, notes };
+function saveEvent(){
+  const brand=document.getElementById('fBrand').value;
+  const type=document.getElementById('fType').value;
+  const name=document.getElementById('fName').value.trim();
+  const start=document.getElementById('fStart').value;
+  const end=document.getElementById('fEnd').value;
+  const notes=document.getElementById('fNotes').value.trim();
+  if(!name||!start){alert('Name and start date are required.');return;}
+  const id=editingId||('e_'+Date.now());
+  events[id]={id,brand,type,name,start,end,notes};
   saveData();
   document.getElementById('modalOverlay').classList.remove('open');
   render();
 }
 
-function deleteEvent() {
-  if (!editingId) return;
-  if (!confirm('Delete this event?')) return;
-  delete events[editingId];
-  saveData();
-  document.getElementById('modalOverlay').classList.remove('open');
-  render();
+function deleteEvent(){
+  if(!editingId||!confirm('Delete this event?'))return;
+  delete events[editingId];saveData();
+  document.getElementById('modalOverlay').classList.remove('open');render();
 }
 
-// ─── FILTERS ─────────────────────────────────────────────────────────────────
-function filterBrand(brand, btn) {
-  currentBrand = brand;
-  document.querySelectorAll('.brand-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  render();
+function setYear(y){currentYear=y;render();}
+
+function setView(v){
+  currentView=v;
+  const showGrid=v==='grid';
+  document.getElementById('bodyScroll').classList.toggle('hidden',!showGrid);
+  document.getElementById('frozenScroll').style.display=showGrid?'':'none';
+  document.getElementById('listView').classList.toggle('active',!showGrid);
+  document.getElementById('gridViewBtn').classList.toggle('active',showGrid);
+  document.getElementById('listViewBtn').classList.toggle('active',!showGrid);
 }
 
-function setYear(y) { currentYear = y; render(); }
+function searchEvents(q){searchQuery=q.toLowerCase().trim();render();}
 
-function setView(v) {
-  currentView = v;
-  document.getElementById('gridView').classList.toggle('hidden', v !== 'grid');
-  document.getElementById('listView').classList.toggle('active', v === 'list');
-  document.getElementById('gridViewBtn').classList.toggle('active', v === 'grid');
-  document.getElementById('listViewBtn').classList.toggle('active', v === 'list');
+function exportCSV(){
+  const all=Object.values(events).filter(e=>e.start&&e.start.startsWith(currentYear)).sort((a,b)=>a.start.localeCompare(b.start));
+  const rows=[['Brand','Type','Event','Start Date','End Date','Notes']];
+  all.forEach(e=>rows.push([BRAND_NAMES[e.brand]||e.brand,TYPE_LABELS[e.type]||e.type,e.name,e.start,e.end||'',(e.notes||'').replace(/,/g,' ')]));
+  const csv=rows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download=`AHD-Calendar-${currentYear}.csv`;a.click();
 }
 
-function searchEvents(q) {
-  searchQuery = q.toLowerCase().trim();
-  render();
-}
-
-// ─── EXPORT ──────────────────────────────────────────────────────────────────
-function exportCSV() {
-  const all = getEventsForYear(currentYear).sort((a,b)=>a.start.localeCompare(b.start));
-  const rows = [['Brand','Type','Event','Start Date','End Date','Notes']];
-  all.forEach(e => rows.push([BRAND_NAMES[e.brand]||e.brand, TYPE_LABELS[e.type]||e.type, e.name, e.start, e.end||'', (e.notes||'').replace(/,/g,' ')]));
-  const csv = rows.map(r => r.map(c=>`"${c}"`).join(',')).join('\n');
-  const a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-  a.download = `AHD-Calendar-${currentYear}.csv`;
-  a.click();
-}
-
-// ─── INIT ────────────────────────────────────────────────────────────────────
-loadData();
-render();
+loadData();render();syncScroll();
 </script>
 </body>
 </html>
