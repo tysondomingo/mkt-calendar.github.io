@@ -64,7 +64,7 @@
   .view-btn:first-child { border-right: none; }
   .view-btn.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
 
-  /* ── FROZEN HEADER (month row + trade show row) ── */
+  /* ── FROZEN HEADER (month row + Trade Shows and Events row) ── */
   /* sits inside #chrome so it scrolls off the page with the chrome block as one unit,
      but the whole #chrome block is sticky so everything freezes together */
   .frozen-scroll {
@@ -120,7 +120,7 @@
   }
   .f-month-num { font-family: 'Roboto', sans-serif; font-size: 10px; color: #666; letter-spacing: 0.15em; margin-bottom: 2px; }
 
-  /* trade show data cells in frozen row */
+  /* Trade Shows and Events data cells in frozen row */
   .f-ts-cell {
     background: #F5F0E9;
     border-right: 1px solid var(--rule);
@@ -259,7 +259,7 @@
     <span class="tag launch"><span class="tag-dot" style="background:var(--tag-launch)"></span>Web Launch</span>
     <span class="tag catalog"><span class="tag-dot" style="background:var(--tag-catalog)"></span>Catalog Upload</span>
     <span class="tag pricelist"><span class="tag-dot" style="background:var(--tag-pricelist)"></span>Price List</span>
-    <span class="tag tradeshow"><span class="tag-dot" style="background:var(--tag-tradeshow)"></span>Trade Show</span>
+    <span class="tag tradeshow"><span class="tag-dot" style="background:var(--tag-tradeshow)"></span>Trade Shows and Events</span>
     <span class="tag maildrop"><span class="tag-dot" style="background:var(--tag-maildrop)"></span>Mail Drop</span>
     <span class="tag salesrep"><span class="tag-dot" style="background:var(--tag-salesrep)"></span>Sales Rep In-Hand</span>
     <span class="tag customer"><span class="tag-dot" style="background:var(--tag-customer)"></span>Customer In-Hand</span>
@@ -274,7 +274,7 @@
     <span class="toolbar-note">Click any event to edit &nbsp;·&nbsp; Scroll right to navigate months</span>
   </div>
 
-  <!-- FROZEN SCROLL: month headers + trade show row -->
+  <!-- FROZEN SCROLL: month headers + Trade Shows and Events row -->
   <div class="frozen-scroll" id="frozenScroll">
     <div class="frozen-grid" id="frozenGrid"></div>
   </div>
@@ -312,7 +312,7 @@
           <option value="launch">Web Launch</option>
           <option value="catalog">Catalog Upload</option>
           <option value="pricelist">Price List</option>
-          <option value="tradeshow">Trade Show</option>
+          <option value="tradeshow">Trade Shows and Events</option>
           <option value="maildrop">Mail Drop</option>
           <option value="salesrep">Sales Rep In-Hand</option>
           <option value="customer">Customer In-Hand</option>
@@ -337,7 +337,7 @@
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const BRAND_ORDER = ['MG','PP','BP','BJ'];
 const BRAND_NAMES = { MG:'Made Goods', PP:'Pigeon & Poodle', BP:'Blue Pheasant', BJ:'Burton James', AHD:'AHD' };
-const TYPE_LABELS = { launch:'Web Launch', catalog:'Catalog Upload', pricelist:'Price List', tradeshow:'Trade Show', maildrop:'Mail Drop', salesrep:'Sales Rep In-Hand', customer:'Customer In-Hand' };
+const TYPE_LABELS = { launch:'Web Launch', catalog:'Catalog Upload', pricelist:'Price List', tradeshow:'Trade Shows and Events', maildrop:'Mail Drop', salesrep:'Sales Rep In-Hand', customer:'Customer In-Hand' };
 
 const SEED = [
   {id:'e1', brand:'MG', type:'launch',    name:'Spring Web Launch',               start:'2026-01-28',end:'',           notes:"MG Spring '26 main launch"},
@@ -443,8 +443,8 @@ function renderFrozen(){
   MONTHS.forEach((m,i)=>{
     h+=`<div class="f-month"><span>${m}</span><span class="f-month-num">${String(i+1).padStart(2,'0')}</span></div>`;
   });
-  // Row 2: AHD label + trade show cells
-  h+=`<div class="f-corner-ts"><span class="brand-label-name">Trade Shows</span><span class="brand-label-tag">AHD</span></div>`;
+  // Row 2: AHD label + Trade Shows and Events cells
+  h+=`<div class="f-corner-ts"><span class="brand-label-name">Trade Shows and Eventss</span><span class="brand-label-tag">AHD</span></div>`;
   MONTHS.forEach((m,mi)=>{
     const evs=eventsFor(currentYear,'AHD',mi);
     const chips=evs.map(e=>`<div class="event ${e.type}" onclick="openEdit('${e.id}')" title="${(e.notes||'').replace(/"/g,'&quot;')}"><div class="event-name">${e.name}</div><div class="event-date">${fmtRange(e.start,e.end)}</div></div>`).join('');
